@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>数据科学入门 — Datakraft</title>
+<style>
+:root{--paper:#EEF2EE;--card:#fff;--ink:#16222A;--mut:#5A6A72;--line:#CBD5D0;--cta:#2447D6;--msg:#F5F7F6;--r:4px;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#111A1F;--card:#182329;--ink:#E8EEF0;--mut:#9AABB2;--line:#2C3A41;--cta:#6E8CFF;--msg:#202D34}}
+:root[data-theme="dark"]{--paper:#111A1F;--card:#182329;--ink:#E8EEF0;--mut:#9AABB2;--line:#2C3A41;--cta:#6E8CFF;--msg:#202D34}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans CJK SC","Segoe UI",sans-serif}
+h1,h2{line-height:1.12;margin:0;font-weight:800}a,button,input,select{font:inherit;color:inherit}button{cursor:pointer}:focus-visible{outline:3px solid var(--cta);outline-offset:2px}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px clamp(16px,4vw,48px);border-bottom:1px solid var(--line);background:var(--card)}
+.bar b{font-size:20px}.bar span{color:var(--mut);font-size:14px}.bar select{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:4px 8px;font-size:14px}
+.hero{padding:clamp(28px,5vw,60px) clamp(16px,4vw,48px);display:grid;gap:28px;grid-template-columns:1.1fr .9fr;align-items:center;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:28px 28px;border-bottom:1px solid var(--line)}
+h1{font-size:clamp(30px,5vw,54px);letter-spacing:-.02em}.sub{font-size:18px;max-width:34em;margin:14px 0 20px}
+dl{display:grid;grid-template-columns:auto 1fr;gap:4px 18px;margin:0;font-size:15px}dt{color:var(--mut)}dd{margin:0;font-weight:600}
+.hero svg{width:100%;height:auto;background:var(--card);border:1px solid var(--line)}
+.wrap{display:block;padding:32px clamp(16px,4vw,48px);max-width:900px;margin:auto}
+section{margin-bottom:34px}h2{font-size:26px;margin-bottom:12px}
+.mod{display:grid;grid-template-columns:96px 1fr;gap:4px 16px;padding:12px 0;border-top:1px solid var(--line)}.mod b{color:var(--mut)}.mod p{margin:2px 0 0;color:var(--mut);font-size:15px}
+.rev{border-top:1px solid var(--line);padding:12px 0}
+.stats{display:flex;gap:28px;flex-wrap:wrap;margin:0 0 8px}.stats div{font-size:14px;color:var(--mut)}.stats b{display:block;font-size:28px;color:var(--ink)}
+aside{align-self:start;position:sticky;top:16px}.buy{background:var(--card);border:1px solid var(--ink);padding:20px;border-radius:var(--r)}.price{font-size:34px;font-weight:800}.buy small{color:var(--mut)}
+#chat{display:flex;flex-direction:column;height:min(74vh,700px);min-height:500px;background:var(--card);border:1px solid var(--ink);border-radius:var(--r);margin-bottom:34px}
+.ch{padding:14px 16px;border-bottom:1px solid var(--line)}.ch b{font-size:17px}.ch small{display:block;color:var(--mut)}
+#msgs{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:14px}
+.m{max-width:92%;font-size:15.5px}.m .who{font-size:13px;font-weight:700;margin-bottom:2px}.m .who em{font-style:normal;font-weight:400;color:var(--mut)}
+.m .t{padding:10px 12px;border-left:4px solid var(--c);background:var(--msg);border-radius:0 var(--r) var(--r) 0;white-space:pre-wrap}
+.m.u{align-self:flex-end}.m.u .t{border:0;background:var(--ink);color:var(--paper);border-radius:var(--r)}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--mut);margin-right:4px;animation:b 1s infinite}.dot:nth-child(2){animation-delay:.15s}.dot:nth-child(3){animation-delay:.3s}@keyframes b{50%{opacity:.2}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 10px}.chips button{border:1px solid var(--ink);background:var(--card);border-radius:20px;padding:6px 12px;font-size:14px}
+.inp{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--line)}.inp input{flex:1;padding:12px;border:1px solid var(--ink);background:var(--card);border-radius:var(--r);min-width:0}.inp button{padding:0 18px;border:0;background:var(--cta);color:#fff;border-radius:var(--r);font-weight:700}
+@media(max-width:860px){.hero,.wrap{grid-template-columns:1fr}aside{position:static}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+.qs{display:flex;flex-direction:column;gap:8px;padding:12px 16px;border-top:1px solid var(--line)}.qs button{text-align:left;border:1px solid var(--ink);background:var(--card);border-radius:var(--r);padding:10px 12px;font-size:15px}.qs button:hover:not(:disabled){background:var(--msg)}.qs button:disabled{opacity:.5;cursor:default}.code{font-weight:800;font-size:28px;letter-spacing:.1em;margin:6px 0}#dev{position:fixed;left:0;bottom:0;background:#000;color:#fff;font-size:12px;padding:4px 8px;z-index:50}</style></head><body>
+<div class="bar"><b>Datakraft</b><span>在线数据学院 · 研究用原型页面</span></div>
+<header class="hero"><div>
+<h1>数据科学入门：从 Python 到第一个模型</h1>
+<p class="sub">16 周导师陪伴式学习：学会收集和分析数据，并在真实数据集上构建你的第一个模型。</p>
+<dl><dt>授课方式</dt><dd>线上授课，导师代码点评</dd><dt>学习周期</dt><dd>16 周，每周 6–8 小时</dd><dt>开课时间</dt><dd>11 月 3 日</dd><dt>学习成果</dt><dd>结业证书与作品集项目</dd></dl></div>
+<svg id="plot" viewBox="0 0 400 300" role="img" aria-label="带回归线的散点图"></svg></header>
+<div class="wrap"><main>
+<div id="chat" role="region" aria-labelledby="ctitle"><div class="ch" style="display:flex;justify-content:space-between;gap:10px"><div><b id="ctitle"></b><small id="csub"></small></div><div style="text-align:right"><b id="cnt">已提问 0 / 10</b><small>请把 10 个问题都问完</small></div></div>
+<div id="msgs" aria-live="polite"></div><div class="qs" id="qs"></div></div>
+<section><h2>课程大纲</h2>
+<div class="mod"><b>第 1–3 周</b><div>Python 与 pandas<p>表格数据、数据清洗、第一批分析报告</p></div></div>
+<div class="mod"><b>第 4–6 周</b><div>SQL 与数据分析<p>PostgreSQL 查询、指标体系、可视化</p></div></div>
+<div class="mod"><b>第 7–9 周</b><div>统计学与 A/B 测试<p>抽样、假设检验、结果解读</p></div></div>
+<div class="mod"><b>第 10–13 周</b><div>机器学习<p>回归、决策树、集成方法、交叉验证</p></div></div>
+<div class="mod"><b>第 14–16 周</b><div>结业项目<p>基于公开数据的独立研究与答辩</p></div></div></section><section><h2>适合人群</h2><p>适合零基础或想转行进入数据分析的学习者。无需编程基础，具备中学数学水平，每周能投入 6–8 小时即可。</p></section><section><h2>学员评价</h2>
+<div class="stats"><div><b>4.5 / 5</b>平均评分，412 条评价</div><div><b>1,284</b>2023 年以来的毕业学员</div><div><b>58%</b>6 个月内获得数据相关岗位</div></div>
+<div class="rev"><b>李雯，29 岁，市场营销 · 5★</b><br>导师逐行点评每一个项目。前几周很吃力，但到课程中段我已经能为团队制作数据看板了。</div>
+<div class="rev"><b>陈静，26 岁，经济学毕业生 · 4★</b><br>课程打下了不错的基础，也增强了信心。统计部分只讲公式、几乎没有推导，对我来说有些不够。</div>
+<div class="rev"><b>刘洋，31 岁，软件测试 · 4★</b><br>每周实际要花 8–10 小时，而不是宣传的 6–8 小时。不过社群和答疑群非常给力。</div>
+<div class="rev"><b>赵敏，38 岁，项目经理 · 3★</b><br>我觉得职业支持不够：简历有人帮忙看，但岗位都是自己找的。我用了 8 个月才找到工作。</div></section>
+</main></div>
+<script>
+const LOG_URL='';   // optional: Google Apps Script web-app URL that receives events (see README)
+const POOL=[{"q": "这门课适合零基础吗？", "n": "适合。根据毕业生评价，学习这门课不需要编程基础，课程从 Python 和 pandas 开始，有位毕业生在导师逐行点评每个项目的帮助下，第 11 周就做出了第一个模型。根据 37 位雇主的调查，这样的毕业生熟练掌握 Python 和 SQL，适合初级分析师岗位。请按每周 8–10 小时来规划，而不是宣传的 6–8 小时。", "g": "适合，我入学时没有任何基础。导师逐行点评了我的每个项目，我大约在第 11 周做出了第一个模型。只是要按每周 8–10 小时来规划，而不是宣传的 6–8 小时。", "e": "我同意，这是个不错的起点。在我们对 37 位雇主的调查中，毕业生熟练掌握 Python 和 SQL，适合初级分析师岗位。"}, {"q": "它能帮我找到工作吗？", "n": "有帮助，主要针对初级分析师岗位。根据 412 位毕业生的调查，58% 在六个月内找到了数据相关岗位，21% 在原岗位使用数据，21% 仍在求职；职业支持包括简历修改和两次模拟面试，不保证就业。根据雇主调查，66% 认为作品集对面试有帮助，73% 愿意再次录用毕业生担任初级分析师，而机器学习工程师岗位很少从这门课的毕业生中招聘。", "g": "对我有帮助，但不是立竿见影。在毕业生调查中，58% 在六个月内找到了数据相关岗位，21% 在原岗位使用数据，21% 仍在求职。职业支持是简历修改和两次模拟面试，不保证就业。", "e": "我同意。在 37 位雇主中，66% 认为项目作品集对面试有帮助，73% 愿意再次录用毕业生担任初级分析师。机器学习工程师岗位很少从这门课的毕业生中招聘。"}, {"q": "值得投入时间和精力吗？", "n": "取决于您的目标。根据毕业生评价，平均评分为 4.5 分（满分 5 分），1,284 名毕业生中 71% 完成了课程，但实际学习强度是 16 周内每周 8–10 小时。根据雇主调查，这门课能让人胜任初级分析师工作，但统计深度和模型部署较弱。如果目标是初级数据分析，值得；如果想做机器学习工程师，则不太值得。", "g": "对我的目标来说值得。毕业生给出 4.5 分（满分 5 分），1,284 人中 71% 学完了，但请预期 16 周内每周 8–10 小时，学习强度不小。", "e": "同意，前提是目标为初级数据分析。雇主认为毕业生能胜任这类工作，但统计深度和模型部署较弱，所以对想做机器学习工程师的人来说不太值得。"}, {"q": "课程还缺少什么？", "n": "有几个方面。根据课程分析，课程不涉及深度学习、贝叶斯方法、因果推断、模型部署、云平台和 MLOps。根据毕业生反馈，统计部分只讲公式，没有推导。根据雇主调查，49% 认为统计严谨性不足，58% 认为毕业生缺乏将模型投入生产的经验。", "g": "作为毕业生，我发现两处不足：统计部分只讲公式，没有推导；模型部署完全没有教。深度学习和贝叶斯方法也没有涉及。", "e": "我同意。在我们的调查中，49% 的雇主认为统计严谨性不足，58% 认为缺乏将模型投入生产的经验。因果推断、云平台和 MLOps 也不在课程中。"}, {"q": "学习强度大概有多大？", "n": "比宣传的要大。学院宣称每周 6–8 小时，但毕业生反映实际为 8–10 小时。根据课程分析，课程共 194 小时，历时 16 周：Python 40 小时、SQL 30 小时、统计 36 小时、机器学习 48 小时、结业项目 40 小时。毕业生表示前几周最吃力，71% 完成了课程；雇主认为学成后主要适合初级分析师工作。", "g": "比宣传的更累：我每周花 8–10 小时，而不是 6–8 小时，前几周最吃力。最终 71% 的毕业生完成了课程。", "e": "这与课程设置吻合：16 周共 194 小时（Python 40、SQL 30、统计 36、机器学习 48、结业项目 40）。雇主认为学成后主要适合初级分析师工作。"}, {"q": "导师的指导怎么样？", "n": "学习方面很强。根据毕业生评价，导师逐行点评项目，答疑群和学员社群很有帮助，但职业支持仅限于简历修改和两次模拟面试。根据雇主调查，66% 认为由此形成的作品集对面试有帮助，毕业生在岗位上还需要约三个月的带教才能独立工作。", "g": "我的导师逐行点评了我的每个项目，答疑群也很给力。职业方面的帮助较少：只有简历修改和两次模拟面试。", "e": "从招聘角度看，这种带教是有成效的：66% 的雇主认为作品集对面试有帮助。毕业生在岗位上经过带教，约三个月可以独立工作。"}, {"q": "毕业后能做什么岗位？", "n": "主要是初级数据分析类岗位。根据雇主调查，73% 愿意再次录用毕业生担任初级分析师，而机器学习工程师岗位很少从这门课的毕业生中招聘。根据毕业生调查，58% 在六个月内找到了数据相关岗位，也有人不换工作，而是在原岗位运用这些技能。", "g": "我认识的同学大多做了初级分析师或数据相关岗位。58% 在六个月内找到了这类岗位，也有人像我一样在原来的工作中用上了这些技能。", "e": "同意。73% 的雇主愿意再次录用毕业生担任初级分析师；机器学习工程师岗位很少从这门课的毕业生中招聘。"}, {"q": "统计和机器学习学得深吗？", "n": "深度中等。根据课程分析，统计与 A/B 测试 36 小时，机器学习 48 小时，涵盖回归、决策树、集成方法和交叉验证，数学部分以直觉和公式为主，没有推导。毕业生反映缺少推导，49% 的雇主认为统计严谨性不足。", "g": "足够用来建模和检验模型，但统计部分比较浅：只看到公式，没有推导。回归、决策树、集成方法和交叉验证都讲到了。", "e": "我同意是中等深度。49% 的雇主认为毕业生统计严谨性不足，不过课程给统计安排了 36 小时，给机器学习安排了 48 小时。"}, {"q": "有哪些项目可以放进作品集？", "n": "共四个。根据课程设置，您会完成三个教学项目和一个基于公开数据的结业项目，使用 Git、Jupyter、PostgreSQL 和可视化工具。根据毕业生反馈，结业项目常常直接放进作品集，可视化和面向业务的结论表达是强项。根据雇主调查，66% 认为作品集对面试有帮助。", "g": "有三个教学项目和一个基于公开数据的结业项目。我的结业项目直接放进了作品集，可视化和面向业务的结论表达是强项。", "e": "雇主证实作品集很重要：66% 认为它对面试有帮助。这些项目用到了 Git、Jupyter 和 PostgreSQL。"}, {"q": "哪些人不适合这门课？", "n": "有三类人。根据毕业生反馈，已经会 SQL 的人觉得前六周比较重复，期待包就业的人可能会失望，因为课程不保证就业。根据课程分析和雇主调查，想深入学习统计、模型部署或想做机器学习工程师的人会觉得课程太浅。另外每周需要 8–10 小时。", "g": "如果您已经会 SQL，前六周会觉得重复，也不要指望包就业。另外每周需要投入 8–10 小时。", "e": "我同意，我再补充一点：想做机器学习工程师、深入学习统计或模型部署的人会觉得课程太浅。这些岗位很少从这门课的毕业生中招聘。"}];
+const HI={named:"您好！我是课程助手。请在下方选择一个问题，我会根据毕业生评价和雇主调查回答，并说明每个观点来自哪类来源。",graduate:"你好！我从毕业生的角度回答，依据毕业生评价和毕业生调查。",employer:"您好！我从招聘方的角度回答，依据对 37 位雇主的调查。"};
+const AG={named:{n:'课程助手',s:'自动回复助手',c:'#4A5A66'},graduate:{n:'毕业生',s:'自动回复助手 · 毕业生视角',c:'#0F8B7A'},employer:{n:'雇主',s:'自动回复助手 · 雇主视角',c:'#A8630A'}};
+const Q=new URLSearchParams(location.search),$=id=>document.getElementById(id);
+const cond='consensus';
+const pid=(Q.get('pid')||'').replace(/[^\w-]/g,'').slice(0,40),LU={none:[],named:['named'],consensus:['graduate','employer']}[cond];
+function log(type,data){if(!LOG_URL)return;try{navigator.sendBeacon(LOG_URL,JSON.stringify({ts:new Date().toISOString(),cond,pid,type,data}))}catch(e){}}
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+let shown=[0,1,2,3],next=4,asked=0,busy=false;
+function add(a,text){const d=document.createElement('div'),u=a==='user';d.className='m'+(u?' u':'');
+ if(!u){d.style.setProperty('--c',AG[a].c);const w=document.createElement('div');w.className='who';w.style.color=AG[a].c;w.innerHTML=AG[a].n+' <em></em>';w.querySelector('em').textContent=AG[a].s;d.appendChild(w)}
+ const t=document.createElement('div');t.className='t';t.textContent=text;d.appendChild(t);$('msgs').appendChild(d);$('msgs').scrollTop=1e9;return d}
+function typing(a){const d=add(a,'');d.querySelector('.t').innerHTML='<span class="dot"></span><span class="dot"></span><span class="dot"></span>';return d}
+function renderQs(){const box=$('qs');box.innerHTML='';if(!shown.length)return;
+ const h=document.createElement('small');h.textContent='请选择一个问题：';h.style.color='var(--mut)';box.appendChild(h);
+ shown.forEach((qi,k)=>{const b=document.createElement('button');b.type='button';b.textContent=POOL[qi].q;b.disabled=busy;b.onclick=()=>ask(k);box.appendChild(b)})}
+async function ask(k){if(busy)return;busy=true;const qi=shown[k];renderQs();add('user',POOL[qi].q);log('ask',{q:qi,n:asked+1});
+ if(cond==='named'){const ty=typing('named');await sleep(1600);ty.remove();add('named',POOL[qi].n)}
+ else{let ty=typing('graduate');await sleep(800);ty.remove();add('graduate',POOL[qi].g);ty=typing('employer');await sleep(800);ty.remove();add('employer',POOL[qi].e)}
+ asked++;if(next<POOL.length)shown[k]=next++;else shown.splice(k,1);
+ $('cnt').textContent='已提问 '+asked+' / 10';busy=false;renderQs();if(asked>=10)finish()}
+function finish(){$('qs').innerHTML='';const A='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',code=(cond==='named'?'N':'C')+'-'+Array.from(crypto.getRandomValues(new Uint8Array(5)),x=>A[x%32]).join('');
+ log('complete',{code});const d=document.createElement('div');d.className='m';d.style.setProperty('--c','#4A5A66');d.innerHTML='<div class="t">您已完成 10 个问题，感谢参与！<br>您的完成代码：<div class="code"></div>请返回问卷并输入此代码。</div>';
+ d.querySelector('.code').textContent=code;$('msgs').appendChild(d);
+ const ret=Q.get('ret');if(ret&&/^https:\/\/(docs\.google\.com\/forms|forms\.gle|[\w.-]*wjx\.cn|wj\.qq\.com|[\w.-]*credamo\.com)\//.test(ret)){const a=document.createElement('a');a.href=ret;a.target='_blank';a.rel='noopener';a.textContent='点击这里返回问卷';a.style.cssText='display:block;margin:12px 16px;font-weight:700';$('qs').appendChild(a)}
+ $('msgs').scrollTop=1e9}
+(()=>{let s='',seed=7;const r=()=>(seed=(seed*9301+49297)%233280)/233280;for(let i=0;i<46;i++){const px=30+r()*340,py=250-(px-30)*.6-r()*60+30*r();s+='<line x1="'+px+'" y1="'+py+'" x2="'+px+'" y2="'+(250-(px-30)*.62-5)+'" stroke="#2447D6" stroke-opacity=".3"/><circle cx="'+px+'" cy="'+py+'" r="4" fill="currentColor"/>'}
+$('plot').innerHTML='<g style="color:var(--ink)"><path d="M30 20V270H380" stroke="currentColor" fill="none"/>'+s+'<line x1="30" y1="250" x2="380" y2="35" stroke="#2447D6" stroke-width="3"/></g>'})();
+if(LU.length){$('ctitle').textContent=LU.length>1?'课程顾问团':'课程助手';$('csub').textContent=LU.map(a=>AG[a].n).join(' · ');LU.forEach(a=>add(a,HI[a]));renderQs()}else $('chat').style.display='none';
+log('page_view',{w:innerWidth});addEventListener('pagehide',()=>log('leave',{asked}));
+</script></body></html>
